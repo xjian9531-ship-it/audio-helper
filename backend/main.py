@@ -53,11 +53,16 @@ async def validation_error_handler(
     _exc: RequestValidationError,
 ) -> JSONResponse:
     path = request.url.path.rstrip("/")
-    stage = {
-        "/upload": "upload",
-        "/asr": "asr",
-        "/extract": "extract",
-    }.get(path, "unknown")
+    if path.startswith("/audio"):
+        stage = "audio"
+    else:
+        stage = {
+            "/upload": "upload",
+            "/asr": "asr",
+            "/extract": "extract",
+            "/search": "search",
+            "/finalize": "finalize",
+        }.get(path, "unknown")
     return JSONResponse(
         status_code=422,
         content={

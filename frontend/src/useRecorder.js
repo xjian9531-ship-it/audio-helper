@@ -16,7 +16,7 @@ function stopTracks(stream) {
   }
 }
 
-export function useRecorder() {
+export function useRecorder({ onSessionStart, onReady } = {}) {
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
   const [result, setResult] = useState(null);
@@ -90,17 +90,19 @@ export function useRecorder() {
 
       const url = URL.createObjectURL(blob);
       objectUrlRef.current = url;
-      setResult({
+      const nextResult = {
         url,
         blob,
         mimeType: blob.type || mimeTypeRef.current,
         durationMs,
         sizeBytes: blob.size,
-      });
+      };
+      setResult(nextResult);
       setStatus("ready");
-      setMessage("录音完成，可以试听或下载");
+      setMessage("录音完成，正在提交");
+      onReady?.(nextResult);
     },
-    [releaseMicrophone],
+    [onReady, releaseMicrophone],
   );
 
   const stopRecorder = useCallback(
@@ -181,6 +183,7 @@ export function useRecorder() {
       return;
     }
 
+    onSessionStart?.();
     streamRef.current = stream;
     chunksRef.current = [];
     mimeTypeRef.current = mimeType;
@@ -225,7 +228,7 @@ export function useRecorder() {
       setStatus("error");
       setMessage(describeRecordError(error));
     }
-  }, [clearMaxTimer, releaseMicrophone, resetResult, stopRecorder]);
+  }, [clearMaxTimer, onSessionStart, releaseMicrophone, resetResult, stopRecorder]);
 
   const finishRecording = useCallback(() => {
     if (phaseRef.current === "requesting") {
