@@ -14,7 +14,7 @@ export default function LocalPlayback({ result }) {
 
   return (
     <section className="local-playback">
-      <h2>本地试听</h2>
+      <h2>本轮录音</h2>
       <audio controls src={result.url} />
       <p>
         格式 {result.mimeType}，时长 {formatDuration(result.durationMs)}，大小{" "}
