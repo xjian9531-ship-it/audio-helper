@@ -52,7 +52,12 @@ async def validation_error_handler(
     request: Request,
     _exc: RequestValidationError,
 ) -> JSONResponse:
-    stage = "upload" if request.url.path.rstrip("/") == "/upload" else "unknown"
+    path = request.url.path.rstrip("/")
+    stage = {
+        "/upload": "upload",
+        "/asr": "asr",
+        "/extract": "extract",
+    }.get(path, "unknown")
     return JSONResponse(
         status_code=422,
         content={
