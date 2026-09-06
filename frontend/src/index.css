@@ -1,0 +1,37 @@
+:root {
+  color: #1f2937;
+  background: #f3f4f6;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.page h1 {
+  margin: 0 0 12px;
+  font-size: 28px;
+}
+
+.page p {
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+
+.hint {
+  color: #6b7280;
+}

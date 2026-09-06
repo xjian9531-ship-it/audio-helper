@@ -1,0 +1,24 @@
+# 环境与密钥
+.env
+.env.local
+.env.*.local
+
+# 后端运行时与依赖
+backend/.venv/
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/.pytest_cache/
+backend/storage/*
+!backend/storage/.gitkeep
+
+# 前端依赖与构建
+frontend/node_modules/
+frontend/dist/
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
